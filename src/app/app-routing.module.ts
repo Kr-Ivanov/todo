@@ -4,12 +4,12 @@ import { CategoryComponent } from './category/category.component';
 import { TodoComponent } from './todo/todo.component';
 
 const routes: Routes = [
-  { path: '', component: CategoryComponent },
-  { path: 'todo', component: TodoComponent }
+    { path: '', component: CategoryComponent },
+    { path: 'todo/:id', component: TodoComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
 })
 export class AppRoutingModule { }

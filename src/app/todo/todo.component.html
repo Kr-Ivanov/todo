@@ -11,12 +11,16 @@
 
 <div class="row ">
     <div class="col-md-12 ">
-        <form action="" class="row gx-4">
+        <form #f="ngForm" (ngSubmit)='f.form.valid && onSubmit(f)' class="row gx-4">
             <div class="col-md-10 form-group">
                 <input type="text" placeholder="Add New Todos here" name="todoText"
-                    class="drop-shadow form-control-plaintext">
+                    class="drop-shadow form-control-plaintext" ngModel required #todo='ngModel'
+                    [ngClass]="{'border-danger': f.submitted && todo.invalid}">
             </div>
             <button type="submit" class="btn btn-primary col-md-2 btn-todo btn-block drop-shadow">Add</button>
+            <div class="text-danger ml-3" *ngIf='f.submitted && todo.invalid && todo.errors?.required'>
+                Todo is required
+            </div>
         </form>
     </div>
 </div>

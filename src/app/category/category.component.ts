@@ -52,6 +52,8 @@ export class CategoryComponent implements OnInit {
 
         }
 
+        f.resetForm();
+
 
     };
 
