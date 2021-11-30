@@ -14,10 +14,11 @@
         <form #f="ngForm" (ngSubmit)='f.form.valid && onSubmit(f)' class="row gx-4">
             <div class="col-md-10 form-group">
                 <input type="text" placeholder="Add New Category here" name="categoryName"
-                    class="drop-shadow form-control-plaintext border-danger" ngModel required #category='ngModel'
-                    [ngClass]="{'border-danger': f.submitted && category.invalid}">
+                    class="drop-shadow form-control-plaintext border-danger" [(ngModel)]=categoryName required
+                    #category='ngModel' [ngClass]="{'border-danger': f.submitted && category.invalid}">
             </div>
-            <button type="submit" class="btn btn-primary col-md-2 btn-todo btn-block drop-shadow">Add</button>
+            <button type="submit"
+                class="btn btn-primary col-md-2 btn-todo btn-block drop-shadow">{{dataStatus}}</button>
             <div class="text-danger ml-3" *ngIf='f.submitted && category.invalid && category.errors?.required'>
                 Category is required
             </div>
@@ -26,8 +27,8 @@
 </div>
 
 <div class="row categories-list">
-    <div class="col-md-3">
-        <div class="card drop-shadow">
+    <div class="col-md-3" *ngFor='let category of categories'>
+        <div class="card drop-shadow" [style.border-left-color]='category.data.colorCode'>
             <div class="card-body">
                 <div class="clearfix">
                     <div class="float-start">
@@ -37,19 +38,20 @@
                     </div>
                     <div class="float-end cat-tools">
                         <small>
-                            <i class="fa fa-pencil-alt text-success"></i>
+                            <i class="fa fa-pencil-alt text-success"
+                                (click)='onEdit(category.data.category, category.id)'></i>
                         </small>
                         <small>
-                            <i class="fas fa-trash text-danger"></i>
+                            <i class="fas fa-trash text-danger" (click)='onDelete(category.id)'></i>
                         </small>
                     </div>
                 </div>
                 <div class="todo-content">
-                    <h3>GYM</h3>
+                    <h3 [style.color]='category.data.colorCode'>{{category.data.category}}</h3>
                     <small class="text-secondary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus,
                         rerum.</small>
                 </div>
-                <span class="badge badge-danger">3 - Todos</span>
+                <span class="badge badge-danger">{{category.data.todoCount}} - Todos</span>
             </div>
         </div>
     </div>

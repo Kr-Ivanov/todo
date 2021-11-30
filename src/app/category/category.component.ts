@@ -13,22 +13,56 @@ export class CategoryComponent implements OnInit {
         '#e7845e', '#fc0184', '#f6b93f', '#9224a7', '#20c898'
     ];
 
+    categories: Array<any> = [];
+
+    categoryName: string = '';
+
+    categoryId: string = '';
+
+    dataStatus: string = 'Add';
+
     constructor(private categoryService: CategoryService) { }
 
     ngOnInit(): void {
-    }
+
+        this.categoryService.loadCategories().subscribe(val => {
+            this.categories = val;
+
+        })
+    };
 
     onSubmit(f: NgForm) {
 
-        let randomNumber = Math.trunc(Math.random() * this.color.length);
+        if (this.dataStatus == 'Add') {
+            let randomNumber = Math.trunc(Math.random() * this.color.length);
 
-        let todoCategory = {
-            category: f.value.categoryName,
-            colorCode: this.color[randomNumber],
-            todoCount: 0
-        };
+            let todoCategory = {
+                category: f.value.categoryName,
+                colorCode: this.color[randomNumber],
+                todoCount: 0
+            };
 
-        this.categoryService.saveCategory(todoCategory);
+            this.categoryService.saveCategory(todoCategory);
+        }
+
+        if (this.dataStatus == 'Edit') {
+
+            this.categoryService.updateCategories(this.categoryId, f.value.categoryName)
+
+
+        }
+
+
+    };
+
+    onEdit(category: string, id: string) {
+        this.categoryName = category;
+        this.categoryId = id;
+        this.dataStatus = 'Edit';
+
+    };
+
+    onDelete(id: string) {
+        this.categoryService.delCategory(id);
     }
-
 }
