@@ -12,6 +12,12 @@ export class TodoComponent implements OnInit {
 
 
     catId: any = '';
+    todos: Array<any> = [];
+    todoName: string = '';
+
+    todoId: string = '';
+
+    dataStatus: string = 'Add';
 
     constructor(
         private todoService: TodoService,
@@ -21,15 +27,34 @@ export class TodoComponent implements OnInit {
     ngOnInit(): void {
         this.catId = this.activatedRoute.snapshot.paramMap.get('id');
 
+        this.todoService.loadTodos(this.catId).subscribe(val => {
+            this.todos = val;
+            console.log(this.todos);
+        });
+
     }
 
     onSubmit(f: NgForm) {
-        let todo = {
-            todo: f.value.todoText,
-            isCompleted: false,
-
+        if (this.dataStatus == 'Add') {
+            let todo = {
+                todo: f.value.todoText,
+                isCompleted: false,
+                todoCount: 0,
+            }
+            this.todoService.saveTodo(this.catId, todo);
         }
-        this.todoService.saveTodo(this.catId, todo);
+
+        if (this.dataStatus == 'Edit') {
+            this.todoService.updateTodo(this.catId, this.todoId, this.todoName);
+            this.dataStatus = 'Add';
+        }
+
         f.resetForm();
     }
+
+    onEdit(category: string, id: string) {
+        this.todoName = category;
+        this.todoId = id;
+        this.dataStatus = 'Edit';
+    };
 }

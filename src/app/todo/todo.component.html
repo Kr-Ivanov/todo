@@ -14,10 +14,11 @@
         <form #f="ngForm" (ngSubmit)='f.form.valid && onSubmit(f)' class="row gx-4">
             <div class="col-md-10 form-group">
                 <input type="text" placeholder="Add New Todos here" name="todoText"
-                    class="drop-shadow form-control-plaintext" ngModel required #todo='ngModel'
+                    class="drop-shadow form-control-plaintext" [(ngModel)]=todoName required #todo='ngModel'
                     [ngClass]="{'border-danger': f.submitted && todo.invalid}">
             </div>
-            <button type="submit" class="btn btn-primary col-md-2 btn-todo btn-block drop-shadow">Add</button>
+            <button type="submit"
+                class="btn btn-primary col-md-2 btn-todo btn-block drop-shadow">{{dataStatus}}</button>
             <div class="text-danger ml-3" *ngIf='f.submitted && todo.invalid && todo.errors?.required'>
                 Todo is required
             </div>
@@ -27,20 +28,20 @@
 
 <div class="row todo-list justify-content-center">
     <div class="col-md-6">
-        <div class="card">
+        <div class="card" *ngFor='let todo of todos'>
             <div class="card-body">
                 <div class="clearfix">
                     <div class="float-start text-secondary">
                         <i class="far fa-circle text-danger"></i>
                         <i class="fas fa-check text-success"></i>
-                        New Todo
+                        {{todo.data.todo}}
                     </div>
                     <div class="float-end">
-                        <i class="far fa-circle text-success"></i>
-                        <i class="fas fa-check text-danger"></i>
+                        <i class="far fa-check-circle text-success"></i>
+                        <i class="fas fa-times-circle text-danger"></i>
                         <div class="todo-tools">
                             <small>
-                                <i class="fas fa-pencil-alt text-warning"></i>
+                                <i class="fas fa-pencil-alt text-warning" (click)='onEdit(todo.data.todo, todo.id)'></i>
                                 <i class="fas fa-trash text-danger"></i>
                             </small>
                         </div>

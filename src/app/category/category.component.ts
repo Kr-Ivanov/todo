@@ -49,11 +49,10 @@ export class CategoryComponent implements OnInit {
 
             this.categoryService.updateCategories(this.categoryId, f.value.categoryName)
 
-
+            this.dataStatus = 'Add'
         }
 
         f.resetForm();
-
 
     };
 

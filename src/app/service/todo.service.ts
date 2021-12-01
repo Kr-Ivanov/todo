@@ -24,4 +24,22 @@ export class TodoService {
             this.toastr.success('New Todo Saved Successfully');
         });
     }
+
+    loadTodos(id: string) {
+        return this.afs.collection('categories').doc(id).collection('todos').snapshotChanges().pipe(
+            map(actions => {
+                return actions.map(a => {
+                    const data = a.payload.doc.data();
+                    const id = a.payload.doc.id;
+                    return { id, data };
+                });
+            })
+        );
+    }
+
+    updateTodo(catId: string, todoId: string, updateData: string) {
+        this.afs.collection('categories').doc(catId).collection('todos').doc(todoId).update({ todo: updateData }).then(() => {
+            this.toastr.success('Todo Updated Successfully');
+        })
+    }
 }
