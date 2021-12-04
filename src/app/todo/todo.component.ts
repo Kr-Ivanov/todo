@@ -39,7 +39,6 @@ export class TodoComponent implements OnInit {
             let todo = {
                 todo: f.value.todoText,
                 isCompleted: false,
-                todoCount: 0,
             }
             this.todoService.saveTodo(this.catId, todo);
         }
@@ -52,9 +51,22 @@ export class TodoComponent implements OnInit {
         f.resetForm();
     }
 
-    onEdit(category: string, id: string) {
-        this.todoName = category;
+    onEdit(todoName: string, id: string) {
+        this.todoName = todoName;
         this.todoId = id;
         this.dataStatus = 'Edit';
     };
+
+    onDelete(id: string) {
+        this.todoService.deleteTodo(this.catId, id);
+    }
+
+    onComplete(id: string) {
+
+        this.todoService.markCompleteTodo(this.catId, id);
+    }
+
+    unComplete(id: string) {
+        this.todoService.markUnCompleteTodo(this.catId, id);
+    }
 }

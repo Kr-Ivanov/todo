@@ -32,17 +32,20 @@
             <div class="card-body">
                 <div class="clearfix">
                     <div class="float-start text-secondary">
-                        <i class="far fa-circle text-danger"></i>
-                        <i class="fas fa-check text-success"></i>
+                        <i class="far fa-circle text-danger" *ngIf=!todo.data.isCompleted></i>
+                        <i class="fas fa-check text-success" *ngIf=todo.data.isCompleted></i>
                         {{todo.data.todo}}
+                        <hr *ngIf='todo.data.isCompleted'>
                     </div>
                     <div class="float-end">
-                        <i class="far fa-check-circle text-success"></i>
-                        <i class="fas fa-times-circle text-danger"></i>
+                        <i class="far fa-check-circle text-success" (click)='onComplete(todo.id)'
+                            *ngIf=!todo.data.isCompleted></i>
+                        <i class="fas fa-times-circle text-danger" (click)='unComplete(todo.id)'
+                            *ngIf=todo.data.isCompleted></i>
                         <div class="todo-tools">
                             <small>
                                 <i class="fas fa-pencil-alt text-warning" (click)='onEdit(todo.data.todo, todo.id)'></i>
-                                <i class="fas fa-trash text-danger"></i>
+                                <i class="fas fa-trash text-danger" (click)='onDelete(todo.id)'></i>
                             </small>
                         </div>
                     </div>

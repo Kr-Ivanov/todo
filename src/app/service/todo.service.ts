@@ -18,9 +18,8 @@ export class TodoService {
 
     saveTodo(id: string, data: any) {
 
-        this.afs.doc('categories/' + id).update({ todoCount: firebase.firestore.FieldValue.increment(1) })
-
-        this.afs.collection('categories').doc(id).collection('todos').add(data).then(ref => {
+        this.afs.collection('categories').doc(id).collection('todos').add(data).then(() => {
+            this.afs.doc('categories/' + id).update({ todoCount: firebase.firestore.FieldValue.increment(1) })
             this.toastr.success('New Todo Saved Successfully');
         });
     }
@@ -40,6 +39,28 @@ export class TodoService {
     updateTodo(catId: string, todoId: string, updateData: string) {
         this.afs.collection('categories').doc(catId).collection('todos').doc(todoId).update({ todo: updateData }).then(() => {
             this.toastr.success('Todo Updated Successfully');
+        })
+    }
+
+    deleteTodo(catId: string, todoId: string) {
+
+
+
+        this.afs.collection('categories').doc(catId).collection('todos').doc(todoId).delete().then(() => {
+            this.afs.doc('categories/' + catId).update({ todoCount: firebase.firestore.FieldValue.increment(-1) });
+            this.toastr.error('Todo Deleted');
+        });
+    }
+
+    markCompleteTodo(catId: string, todoId: string) {
+        this.afs.collection('categories').doc(catId).collection('todos').doc(todoId).update({ isCompleted: true }).then(() => {
+            this.toastr.success('Todo Completed Successfully');
+        })
+    }
+
+    markUnCompleteTodo(catId: string, todoId: string) {
+        this.afs.collection('categories').doc(catId).collection('todos').doc(todoId).update({ isCompleted: false }).then(() => {
+            this.toastr.warning('Todo Should Be Completed');
         })
     }
 }
