@@ -13,6 +13,8 @@ import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { CategoryComponent } from './category/category.component';
 import { TodoComponent } from './todo/todo.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
     declarations: [
@@ -20,7 +22,9 @@ import { TodoComponent } from './todo/todo.component';
         NavbarComponent,
         FooterComponent,
         CategoryComponent,
-        TodoComponent
+        TodoComponent,
+        LoginComponent,
+        RegisterComponent
     ],
     imports: [
         BrowserModule,

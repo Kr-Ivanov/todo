@@ -1,5 +1,5 @@
 header{
-    height: 100px;
+    height: 150px;
     padding-top: 30px;
     padding-bottom: 20px;
     margin-bottom: 50px;
@@ -12,4 +12,26 @@ header{
     border-radius: 50px;
     cursor: pointer;
 }
+
+ul{
+    display: flex;
+    justify-content: right;
+    padding: 0px;
+    margin: 0px;
+    margin-top: -15px;
+
+}
+
+li{
+    
+    display: inline;
+    padding: 10px 30px;
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+    font-size: 20px;
+}
+
 
